@@ -1,0 +1,132 @@
+{% extends "pacientes/base.html" %}
+
+{% block title %}Nueva Cita{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="page-header">
+            <h1 class="h3">Nueva Cita Médica</h1>
+            <p class="text-muted">Complete el formulario para agendar una nueva cita</p>
+        </div>
+
+        {% if error %}
+        <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle me-2"></i>{{ error }}
+        </div>
+        {% endif %}
+
+        <div class="card">
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="paciente" class="form-label">Paciente</label>
+                                <select name="paciente" id="paciente" class="form-select" required>
+                                    <option value="" selected disabled>Seleccione un paciente</option>
+                                    <option value="Ana Martínez">Ana Martínez</option>
+                                    <option value="Carlos López">Carlos López</option>
+                                    <option value="María Rodríguez">María Rodríguez</option>
+                                </select>
+                                <div class="form-text">
+                                    <a href="#" class="text-decoration-none">
+                                        <i class="bi bi-plus-circle me-1"></i>Registrar nuevo paciente
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="medico" class="form-label">Médico</label>
+                                <select name="medico" id="medico" class="form-select" required>
+                                    <option value="" selected disabled>Seleccione un médico</option>
+                                    <option value="Dr. García - Cardiología">Dr. García - Cardiología</option>
+                                    <option value="Dra. Rodríguez - Pediatría">Dra. Rodríguez - Pediatría</option>
+                                    <option value="Dr. Fernández - Traumatología">Dr. Fernández - Traumatología</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                    <input type="date" name="fecha" id="fecha" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="hora" class="form-label">Hora</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                                    <input type="time" name="hora" id="hora" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="tipo_cita" class="form-label">Tipo de Cita</label>
+                                <select name="tipo_cita" id="tipo_cita" class="form-select" required>
+                                    <option value="" selected disabled>Seleccione el tipo de cita</option>
+                                    <option value="primera_vez">Primera vez</option>
+                                    <option value="seguimiento">Seguimiento</option>
+                                    <option value="control">Control rutinario</option>
+                                    <option value="urgencia">Urgencia</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="motivo" class="form-label">Motivo de la Consulta</label>
+                                <textarea name="motivo" id="motivo" rows="3" class="form-control" placeholder="Describa brevemente el motivo de la consulta"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="estado" class="form-label">Estado</label>
+                                <select name="estado" id="estado" class="form-select">
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="confirmada">Confirmada</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="duracion" class="form-label">Duración (minutos)</label>
+                                <input type="number" name="duracion" id="duracion" class="form-control" value="30" min="15" step="15">
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="notas" class="form-label">Notas Adicionales</label>
+                                <textarea name="notas" id="notas" rows="2" class="form-control" placeholder="Información adicional relevante para la cita"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4 pt-3 border-top">
+                        <a href="{% url 'lista_citas' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-1"></i>Guardar Cita
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

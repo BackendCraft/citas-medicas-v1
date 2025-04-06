@@ -1,0 +1,192 @@
+{% extends "pacientes/base.html" %}
+
+{% block title %}Gestión de Citas Médicas{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="h3">Citas Médicas</h1>
+        <p class="text-muted">Administre todas las citas médicas del sistema</p>
+    </div>
+    <a href="{% url 'agregar_cita' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-2"></i>Nueva Cita
+    </a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-filter me-2"></i>Filtros</span>
+        <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filtrosCollapse">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+    </div>
+    <div class="collapse" id="filtrosCollapse">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label for="fecha_desde" class="form-label">Fecha desde</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                        <input type="date" class="form-control" id="fecha_desde" name="fecha_desde">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="fecha_hasta" class="form-label">Fecha hasta</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                        <input type="date" class="form-control" id="fecha_hasta" name="fecha_hasta">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="medico" class="form-label">Médico</label>
+                    <select class="form-select" id="medico" name="medico">
+                        <option value="">Todos los médicos</option>
+                        <option value="1">Dr. García</option>
+                        <option value="2">Dra. Rodríguez</option>
+                        <option value="3">Dr. Fernández</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="paciente" class="form-label">Paciente</label>
+                    <input type="text" class="form-control" id="paciente" name="paciente" placeholder="Nombre del paciente">
+                </div>
+                <div class="col-md-4">
+                    <label for="estado" class="form-label">Estado</label>
+                    <select class="form-select" id="estado" name="estado">
+                        <option value="">Todos los estados</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="confirmada">Confirmada</option>
+                        <option value="completada">Completada</option>
+                        <option value="cancelada">Cancelada</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <div class="d-grid gap-2 d-md-flex w-100">
+                        <button type="submit" class="btn btn-primary flex-grow-1">
+                            <i class="bi bi-search me-2"></i>Buscar
+                        </button>
+                        <button type="reset" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-2"></i>Limpiar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-calendar3 me-2"></i>Listado de Citas</span>
+        <div class="dropdown">
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="exportarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-download me-1"></i>Exportar
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="exportarDropdown">
+                <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-excel me-2"></i>Excel</a></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-pdf me-2"></i>PDF</a></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-printer me-2"></i>Imprimir</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Paciente</th>
+                    <th>Médico</th>
+                    <th>Fecha y Hora</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas %}
+                <tr>
+                    <td>#{{ cita.id }}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-circle me-2">
+                                <i class="bi bi-person"></i>
+                            </div>
+                            <div>
+                                <div class="fw-semibold">{{ cita.paciente }}</div>
+                                <div class="small text-muted">{{ cita.paciente.dni }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="fw-semibold">{{ cita.medico }}</div>
+                        <div class="small text-muted">{{ cita.medico.especialidad }}</div>
+                    </td>
+                    <td>
+                        <div>{{ cita.fecha|date:"d/m/Y" }}</div>
+                        <div class="small text-muted">{{ cita.hora }}</div>
+                    </td>
+                    <td>
+                        {% if cita.estado == 'pendiente' %}
+                            <span class="badge badge-warning">Pendiente</span>
+                        {% elif cita.estado == 'confirmada' %}
+                            <span class="badge badge-info">Confirmada</span>
+                        {% elif cita.estado == 'completada' %}
+                            <span class="badge badge-success">Completada</span>
+                        {% elif cita.estado == 'cancelada' %}
+                            <span class="badge badge-danger">Cancelada</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-sm btn-outline-secondary" title="Ver detalles">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{% url 'editar_cita' cita.id %}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'eliminar_cita' cita.id %}" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-5">
+                        <div class="py-4">
+                            <i class="bi bi-calendar-x fs-1 text-muted d-block mb-3 opacity-50"></i>
+                            <h5 class="fw-medium mb-2">No hay citas registradas</h5>
+                            <p class="text-muted mb-4">Agregue una nueva cita para comenzar</p>
+                            <a href="{% url 'agregar_cita' %}" class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-2"></i>Nueva Cita
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if citas %}
+    <div class="card-footer d-flex justify-content-between align-items-center">
+        <div class="text-muted">Mostrando {{ citas|length }} citas</div>
+        <nav aria-label="Paginación">
+            <ul class="pagination mb-0">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Siguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

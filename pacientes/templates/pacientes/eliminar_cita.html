@@ -1,0 +1,79 @@
+{% extends "pacientes/base.html" %}
+
+{% block title %}Eliminar Cita{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white border-bottom d-flex align-items-center">
+                <h5 class="mb-0 text-danger">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Confirmar eliminación
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <i class="bi bi-calendar-x fs-1 text-danger opacity-50"></i>
+                </div>
+                
+                <h2 class="h4 text-center mb-4 fw-medium">¿Está seguro de eliminar esta cita?</h2>
+                
+                <div class="card bg-light mb-4 border">
+                    <div class="card-body p-3">
+                        <div class="row mb-2">
+                            <div class="col-4 text-muted">Paciente:</div>
+                            <div class="col-8 fw-medium">{{ cita.paciente }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-4 text-muted">Médico:</div>
+                            <div class="col-8">{{ cita.medico }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-4 text-muted">Fecha:</div>
+                            <div class="col-8">{{ cita.fecha|date:"d/m/Y" }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-4 text-muted">Hora:</div>
+                            <div class="col-8">{{ cita.hora }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-4 text-muted">Estado:</div>
+                            <div class="col-8">
+                                {% if cita.estado == 'pendiente' %}
+                                    <span class="badge badge-warning">Pendiente</span>
+                                {% elif cita.estado == 'confirmada' %}
+                                    <span class="badge badge-info">Confirmada</span>
+                                {% elif cita.estado == 'completada' %}
+                                    <span class="badge badge-success">Completada</span>
+                                {% elif cita.estado == 'cancelada' %}
+                                    <span class="badge badge-danger">Cancelada</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if cita.motivo %}
+                        <div class="row">
+                            <div class="col-4 text-muted">Motivo:</div>
+                            <div class="col-8">{{ cita.motivo }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="alert alert-warning">
+                    <i class="bi bi-info-circle me-2"></i>Esta acción no se puede deshacer.
+                </div>
+
+                <form method="post" class="d-flex justify-content-between mt-4">
+                    {% csrf_token %}
+                    <a href="{% url 'lista_citas' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i>Sí, eliminar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
