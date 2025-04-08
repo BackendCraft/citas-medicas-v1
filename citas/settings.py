@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'pacientes',
+    'suscripciones',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51QkCPcLuMl0Rhhttt0diC60MxwyXTbbYkctIHI9DAgXvnt7FHVdhJXgkFsEQNJBLhxn5h6V5a1Y6yQfk8y5TBQDP00iOr4AlIs'
+STRIPE_SECRET_KEY = 'sk_test_51QkCPcLuMl0RhhtttXTE5dvVA0KUNuCRSJ060EgzgDKVszsxNsoDIPvWD8hwpujX1WRjAXR0GPv0LooTFZPap7Ka003FcfgAUD'

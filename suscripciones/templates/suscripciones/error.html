@@ -1,0 +1,11 @@
+{% extends "pacientes/base.html" %}
+
+{% block title %}Error de Suscripción{% endblock %}
+
+{% block content %}
+<div class="alert alert-danger mt-5 text-center">
+    <h2>Ocurrió un error durante el proceso de suscripción</h2>
+    <p>Por favor, intenta nuevamente más tarde.</p>
+    <a href="{% url 'planes' %}" class="btn btn-primary mt-3">Volver a planes</a>
+</div>
+{% endblock %}

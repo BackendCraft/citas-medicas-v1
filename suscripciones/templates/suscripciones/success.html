@@ -1,0 +1,66 @@
+{% extends "pacientes/base.html" %}
+
+{% block title %}Suscripción Exitosa{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body text-center p-5">
+                <div class="mb-4">
+                    <span class="display-1 text-success">
+                        <i class="bi bi-check-circle"></i>
+                    </span>
+                </div>
+                
+                <h1 class="h3 mb-3">¡Suscripción Completada con Éxito!</h1>
+                <p class="text-muted mb-4">Gracias por suscribirte al plan Premium. Tu cuenta ha sido actualizada y ahora tienes acceso a todas las características premium.</p>
+                
+                <div class="alert alert-light mb-4">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Hemos enviado un recibo a tu correo electrónico con los detalles de la transacción.
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{% url 'lista_citas' %}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-calendar-check me-2"></i>Ir a Mis Citas
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">¿Qué sigue?</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-4 text-center">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <i class="bi bi-calendar-plus fs-1 text-primary"></i>
+                        </div>
+                        <h5>Agenda Citas</h5>
+                        <p class="text-muted">Comienza a agendar citas ilimitadas para tus pacientes.</p>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <i class="bi bi-gear fs-1 text-primary"></i>
+                        </div>
+                        <h5>Personaliza tu Perfil</h5>
+                        <p class="text-muted">Configura tu perfil y preferencias de notificación.</p>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <i class="bi bi-bar-chart fs-1 text-primary"></i>
+                        </div>
+                        <h5>Accede a Reportes</h5>
+                        <p class="text-muted">Visualiza reportes detallados de tu actividad médica.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

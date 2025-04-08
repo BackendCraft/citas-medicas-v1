@@ -19,5 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),  # Agregar sistema de autenticación
     path('', include('pacientes.urls')),
+    path('suscripciones/', include('suscripciones.urls')),  # Agregar URLs de suscripciones
 ]
