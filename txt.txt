@@ -1,3 +1,4 @@
 https://cursos.devtalles.com/pages/programas-react
 https://es.react.dev/learn
 https://nextjs.org/learn/react-foundations
+https://faztweb.com/contenido?type=course
